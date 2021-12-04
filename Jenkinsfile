@@ -1,7 +1,7 @@
 pipeline {
    environment {
     registry = "arunkumarniit/azure-vote-front"
-    registryCredential = 'DockerHub'
+    registryCredential = "dockerhub_credentials"
     dockerImage =''
    }
    agent any
@@ -60,7 +60,7 @@ pipeline {
             dir("$WORKSPACE/azure-vote")
             {
                script {
-                  docker.withRegistry("https://index.docker.io/v1/", registryCredential)
+                  docker.withRegistry("https://hub.docker.com/", registryCredential)
                   {
                      def image = docker.build(registry) 
                      image.push(); 
