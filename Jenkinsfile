@@ -60,7 +60,7 @@ pipeline {
             dir("$WORKSPACE/azure-vote")
             {
                script {
-                  docker.withRegistry("https://hub.docker.com/", registryCredential)
+                  docker.withRegistry("https://index.docker.io/v1/", registryCredential)
                   {
                      def image = docker.build(registry) 
                      image.push(); 
