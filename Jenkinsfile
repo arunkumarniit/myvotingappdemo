@@ -49,5 +49,22 @@ pipeline {
             """)
          }
       }
+      stage('Push Container') {
+         steps {
+            echo "Workspace is $WORKSPACE"
+            dir("$WORKSPACE/azure-vote")
+            {
+               script {
+                  docker.withRegistry("https://hub.docker.com/", "DockerHub")
+                  {
+                     def image = docker.build('arunkumarniit/azure-vote-front:latest') {
+                        image.push();
+                     }
+                  }
+               }
+            }
+         }
+      }
+
    } 
 }
