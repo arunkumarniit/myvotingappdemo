@@ -1,4 +1,9 @@
 pipeline {
+   environment {
+    registry = "arunkumarniit/azure-vote-front"
+    registryCredential = 'DockerHub'
+    dockerImage =''
+   }
    agent any
 
    stages {
@@ -13,7 +18,7 @@ pipeline {
             powershell(script: """
                cd azure-vote/
                docker images -a
-               docker build -t jenkins-pipeline .
+               docker build -t ${registry} .
                docker images -a
                cd ..            
             """)
@@ -55,12 +60,11 @@ pipeline {
             dir("$WORKSPACE/azure-vote")
             {
                script {
-                  docker.withRegistry("https://hub.docker.com/", "DockerHub")
+                  docker.withRegistry("https://hub.docker.com/", $registryCredential)
                   {
-                     def image = docker.build('arunkumarniit/azure-vote-front:latest') {
-                        image.push();
-                     }
-                  }
+                     def image = docker.build($registry) 
+                     image.push(); 
+                  } 
                }
             }
          }
