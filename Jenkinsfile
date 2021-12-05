@@ -69,16 +69,30 @@ pipeline {
             }
          }
       }
-      stage('Run Trivy') {
-         steps {
-             powershell(script: """
-                  docker pull aquasec/trivy:0.21.1 
-               """)
-             powershell(script: """
-                  docker run --rm -v C:/root/.cache/ aquasec/trivy:0.21.1 ${registry}
-                """)
+      stage('Container Scanning')
+      {
+         parallel {
+            stage('Run Anchore') {
+               steps {
+                  sleep(time: 10, unit: 'SECONDS')
+                  powershell(script: """
+                     Write-Output: ${registry} 
+                  """)
+               }
+            }
+            stage('Run Trivy') {
+               steps {
+                  powershell(script: """
+                        docker pull aquasec/trivy:0.21.1 
+                     """)
+                  powershell(script: """
+                        docker run --rm -v C:/root/.cache/ aquasec/trivy:0.21.1 ${registry}
+                     """)
+               }
+            }
          }
       }
+      
 
    } 
 }
