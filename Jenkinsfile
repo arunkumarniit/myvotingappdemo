@@ -72,10 +72,7 @@ pipeline {
       stage('Run Trivy') {
          steps {
              powershell(script: """
-                  docker pull aquasec/trivy:0.21.1
-             
-                  C:\\Windows\\System32\\wsl.exe -- 
-                   sudo trivy ${registry}
+                  docker pull aquasec/trivy:0.21.1 
                """)
              powershell(script: """
                   docker run --rm -v C:/root/.cache/ aquasec/trivy:0.21.1 ${registry}
