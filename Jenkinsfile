@@ -3,7 +3,8 @@
 pythonPipeline {
    repoUrl = "https://github.com/arunkumarniit/myvotingappdemo"
    repoBranch = "shared-library"
-   registry = ''
-   registryCredentials = ''
+   dockerFileFolder = "azure-vote"
+   dockerRegistry = "arunkumarniit/azure-vote-front"
+   dockerRegistryCredentials = "dockerhub_credentials"
 }
  
