@@ -6,5 +6,7 @@ pythonPipeline {
    dockerFileFolder = "azure-vote"
    dockerRegistry = "arunkumarniit/azure-vote-front"
    dockerRegistryCredentials = "dockerhub_credentials"
+   testsContainerFileLocation = "scripts/test_container.ps1"
+   testsScriptsFileLocation = "tests/test_sample.py"
 }
  
