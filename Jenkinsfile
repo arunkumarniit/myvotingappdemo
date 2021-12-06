@@ -102,7 +102,7 @@ pipeline {
       }
       stage('Approve PROD Deploy') {
          when { 
-            branch "$GIT_BRANCH"
+            expression { BRANCH_NAME ==~ /(main|origin//main)/ }
          }
          options {
             timeout(time:1, unit:'HOURS')
@@ -121,7 +121,7 @@ pipeline {
       }
       stage('Deploy to PROD') {
          when {   
-            branch "$GIT_BRANCH"
+             expression { BRANCH_NAME ==~ /(main|origin//main)/ }
          }
          environment {
             ENVIRONMENT = 'prod'
