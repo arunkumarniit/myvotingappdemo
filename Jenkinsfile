@@ -102,8 +102,7 @@ pipeline {
       }
       stage('Approve PROD Deploy') {
          when { 
-            echo "$GIT_BRANCH"
-            branch 'main'
+            branch "$GIT_BRANCH"
          }
          options {
             timeout(time:1, unit:'HOURS')
@@ -121,9 +120,8 @@ pipeline {
          }
       }
       stage('Deploy to PROD') {
-         when {  
-            echo "$GIT_BRANCH"
-            branch 'origin//main'
+         when {   
+            branch "$GIT_BRANCH"
          }
          environment {
             ENVIRONMENT = 'prod'
