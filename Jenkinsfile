@@ -1,6 +1,5 @@
 #!groovy
 package sharedlibrary
-
 @Library('github.com/arunkumarniit/demo-shared-pipeline') _
 
 pythonPipeline {
