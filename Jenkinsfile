@@ -69,30 +69,67 @@ pipeline {
             }
          }
       }
-      stage('Container Scanning')
-      {
-         parallel {
-            stage('Run Anchore') {
-               steps {
-                  sleep(time: 10, unit: 'SECONDS')
-                  powershell(script: """
-                     Write-Output: ${registry} 
-                  """)
-               }
+      // stage('Container Scanning')
+      // {
+      //    parallel {
+      //       stage('Run Anchore') {
+      //          steps {
+      //             sleep(time: 10, unit: 'SECONDS')
+      //             powershell(script: """
+      //                Write-Output: ${registry} 
+      //             """)
+      //          }
+      //       }
+      //       stage('Run Trivy') {
+      //          steps {
+      //             powershell(script: """
+      //                   docker pull aquasec/trivy:0.21.1 
+      //                """)
+      //             powershell(script: """
+      //                   docker run --rm -v C:/root/.cache/ aquasec/trivy:0.21.1 ${registry}
+      //                """)
+      //          }
+      //       }
+      //    }
+      // }
+      stage('Deploy to QA') {
+         environment {
+            ENVIRONMENT ='qa'
+         }
+         steps {
+            echo "Deploying to ${ENVIRONMENT}"
+         }
+      }
+      stage('Approve PROD Deploy') {
+         when {
+            branch 'main'
+         }
+         options {
+            timeout(time:1, unit:'HOURS')
+         }
+         steps {
+            input message: "Deploy ?"
+         }
+         post {
+            success {
+               echo "Production Deploy Approved"
             }
-            stage('Run Trivy') {
-               steps {
-                  powershell(script: """
-                        docker pull aquasec/trivy:0.21.1 
-                     """)
-                  powershell(script: """
-                        docker run --rm -v C:/root/.cache/ aquasec/trivy:0.21.1 ${registry}
-                     """)
-               }
+            aborted {
+               echo "Production Deploy Denied"
             }
          }
       }
-      
+      stage('Deploy to PROD') {
+         when {
+            branch 'main'
+         }
+         environment {
+            ENVIRONMENT = 'prod'
+         }
+         steps {
+            echo "Deploying to ${ENVIRONMENT}"
+         }
+      }
 
    } 
 }
