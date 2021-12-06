@@ -102,7 +102,11 @@ pipeline {
       }
       stage('Approve PROD Deploy') { 
          when {   
-             expression { branch ==~ /(main)/ }
+            anyOf {
+               branch 'master';
+               branch 'main';
+               branch 'origin/main';
+            }
          }
          options {
             timeout(time:1, unit:'HOURS')
@@ -121,7 +125,11 @@ pipeline {
       }
       stage('Deploy to PROD') { 
          when {   
-             expression { branch ==~ /(main)/ }
+            anyOf {
+               branch 'master';
+               branch 'main';
+               branch 'origin/main';
+            }
          }
          environment {
             ENVIRONMENT = 'prod'
