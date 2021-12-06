@@ -102,7 +102,7 @@ pipeline {
       }
       stage('Approve PROD Deploy') {
          when {
-            echo branch
+           echo ${branch}
             branch 'origin//main'
          }
          options {
@@ -122,7 +122,7 @@ pipeline {
       }
       stage('Deploy to PROD') {
          when { 
-            echo branch
+            echo ${branch}
             branch 'origin//main'
          }
          environment {
