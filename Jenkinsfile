@@ -101,11 +101,9 @@ pipeline {
          }
       }
       stage('Approve PROD Deploy') { 
-         when {   
-            anyOf {
-               branch 'master';
-               branch 'main';
-               branch 'origin/main';
+         when {
+            not {
+               branch 'master'
             }
          }
          options {
@@ -117,18 +115,18 @@ pipeline {
          post {
             success {
                echo "Production Deploy Approved"
+                echo "Branch name is ${branch}"
             }
             aborted {
                echo "Production Deploy Denied"
+                echo "Branch name is ${branch}"
             }
          }
       }
       stage('Deploy to PROD') { 
-         when {   
-            anyOf {
-               branch 'master';
-               branch 'main';
-               branch 'origin/main';
+          when {
+            not {
+               branch 'master'
             }
          }
          environment {
@@ -136,6 +134,7 @@ pipeline {
          }
          steps {
             echo "Deploying to ${ENVIRONMENT}"
+            echo "Branch name is ${branch}"
          }
       }
 
