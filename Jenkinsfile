@@ -114,12 +114,10 @@ pipeline {
          }
          post {
             success {
-               echo "Production Deploy Approved"
-                echo "Branch name is ${branch}"
+               echo "Production Deploy Approved" 
             }
             aborted {
-               echo "Production Deploy Denied"
-                echo "Branch name is ${branch}"
+               echo "Production Deploy Denied" 
             }
          }
       }
@@ -133,8 +131,7 @@ pipeline {
             ENVIRONMENT = 'prod'
          }
          steps {
-            echo "Deploying to ${ENVIRONMENT}"
-            echo "Branch name is ${branch}"
+            echo "Deploying to ${ENVIRONMENT}" 
          }
       }
 
