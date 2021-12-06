@@ -11,6 +11,19 @@ pipeline {
             }
          }
       }
- 
+      stage('Call Library function with an argument') {
+         steps {
+            script {
+               helloArgs('Aruns Jenkins!')
+            }
+         }
+      }
+      stage('Call Additional library functions') {
+         steps {
+            script {
+               helloArgs.goodbyeWorld('Jenkins!!')
+            }
+         }
+      }
    } 
 }
