@@ -101,8 +101,9 @@ pipeline {
          }
       }
       stage('Approve PROD Deploy') {
-         when { 
-            expression { BRANCH_NAME ==~ /(main|origin//main)/ }
+          echo ${BRANCH_NAME}
+         when {   
+             expression { BRANCH_NAME ==~ /(main)/ }
          }
          options {
             timeout(time:1, unit:'HOURS')
@@ -120,8 +121,9 @@ pipeline {
          }
       }
       stage('Deploy to PROD') {
+         echo ${BRANCH_NAME}
          when {   
-             expression { BRANCH_NAME ==~ /(main|origin//main)/ }
+             expression { BRANCH_NAME ==~ /(main)/ }
          }
          environment {
             ENVIRONMENT = 'prod'
