@@ -100,8 +100,7 @@ pipeline {
             echo "Deploying to ${ENVIRONMENT}"
          }
       }
-      stage('Approve PROD Deploy') {
-          echo ${BRANCH_NAME}
+      stage('Approve PROD Deploy') { 
          when {   
              expression { BRANCH_NAME ==~ /(main)/ }
          }
@@ -120,8 +119,7 @@ pipeline {
             }
          }
       }
-      stage('Deploy to PROD') {
-         echo ${BRANCH_NAME}
+      stage('Deploy to PROD') { 
          when {   
              expression { BRANCH_NAME ==~ /(main)/ }
          }
